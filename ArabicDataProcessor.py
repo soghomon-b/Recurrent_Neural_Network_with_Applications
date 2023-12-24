@@ -16,7 +16,9 @@ class CharacterNotInVocab(Exception):
 class RunTimeException(Exception): 
     pass
 
-#actual classes 
+
+
+#An abstract class that processes data in a list of .txt files 
 class AbstractArabicDataProcessor(ABC): 
     
     def __init__(self, file_directories : list):
@@ -107,7 +109,7 @@ class AbstractArabicDataProcessor(ABC):
         pass
 
 
-
+#simple data processor, converting words into one-hot encoding tensors
 class SimpleArabicDataProcessor(AbstractArabicDataProcessor): 
     
     def __init__(self, file_directories : list):
@@ -131,7 +133,7 @@ class SimpleArabicDataProcessor(AbstractArabicDataProcessor):
     
 
 
-
+#unimplemented method that combines one-hot encoding and positional embedding methods
 class PositionEmbeddingArabicDataProcessor(AbstractArabicDataProcessor): 
     
     def __init__(self, file_directories : list):
