@@ -7,7 +7,7 @@ import random
 import time
 import math
 
-
+#a recurrent Neural Network ready to be trained
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(RNN, self).__init__()
