@@ -31,13 +31,12 @@ Refactored the process in the tutorial into one class, which if you instantiate 
 sets up the code needed for someone to use the classes. What needs to be done: 
 * set the list of files to the ones containing the data, make sure to name the files the same as the category name. 
 * change the data processor if needed by copying the following code and pasting it after the initialization of the trainer class:
-  model = SentenceProcessor(notion_files)
-  trainer.set_model(model)
+        model = SentenceProcessor(notion_files)
+        trainer.set_model(model)
 
 or
-
-  model = PositionEmbeddingArabicDataProcessor(notion_files)
-  trainer.set_model(model)
+        model = PositionEmbeddingArabicDataProcessor(notion_files)
+        trainer.set_model(model)
 
 * Finally, run the code
 
