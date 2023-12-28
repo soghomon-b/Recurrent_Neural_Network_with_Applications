@@ -27,7 +27,9 @@ class Trainer():
         self.all_losses = []
         self.model_number = 0
         
-    
+    def set_model(self, model): 
+        self.model = model
+
     #returns a random integer
     def randomChoice(self, l):
         return l[random.randint(0, len(l) - 1)]

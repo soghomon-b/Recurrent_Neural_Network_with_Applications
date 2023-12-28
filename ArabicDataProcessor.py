@@ -1,8 +1,11 @@
-import torch 
+import torch
+from torch._tensor import Tensor 
 import torch.nn as nn 
 import os
 from abc import ABC, abstractmethod
-
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 #exception classes
 class DictionaryNotEmpty(Exception): 
@@ -133,19 +136,52 @@ class SimpleArabicDataProcessor(AbstractArabicDataProcessor):
     
 
 
-#unimplemented method that combines one-hot encoding and positional embedding methods
-class PositionEmbeddingArabicDataProcessor(AbstractArabicDataProcessor): 
+#class that combines one-hot encoding and positional embedding to process Arabic Text
+class PositionEmbeddingArabicDataProcessor(SimpleArabicDataProcessor): 
     
     def __init__(self, file_directories : list):
         super.__init__(file_directories) 
     
     #along with one-hot encoding, implements Positional Embedding 
-    def word_to_tensor(self, word : str) -> torch.Tensor: 
-        case : int = self.word_analyser(word)
-        pass #stub
+    def word_to_tensor(self, word: str) -> torch.Tensor: 
+        tensor = super().word_to_tensor(word)
+        which_case = self.word_analyser(word)
+        
+        if which_case == 11: 
+            # Update the tensor for case 11
+            index_to_update = (1, 0, self.vocab.index("ا"))
+            tensor[index_to_update] = 2
+        elif which_case == 21:
+            # Update the tensor for case 21
+            index_to_update = (0, 0, self.vocab.index("م"))
+            tensor[index_to_update] = 2
+        elif which_case == 12 and "ِ" in word:
+            # Update the tensor for case 12 (update the condition as needed)
+            index_to_update = (0, 0, self.vocab.index("ِ"))
+            tensor[index_to_update] = 2
+        elif which_case == 22 and "َ" in word:
+            # Update the tensor for case 22 (update the condition as needed)
+            index_to_update = (0, 0, self.vocab.index("َ"))
+            tensor[index_to_update] = 2
+
+        return tensor
+
 
     #set criteria for Positional Embedding, 
     # divide the cases into n number of cases and make this method return the case needed.
     def word_analyser(self, word : str) -> int:
-        return 0 #stub
+        if word[1] == "ا":
+            return 11
+        elif word[0] == "م":
+            return 21
+        elif "ِ" in word: 
+            return 12
+        elif "َ" in word: 
+            return 22
+    
+
+
+
+                            
+                 
     
